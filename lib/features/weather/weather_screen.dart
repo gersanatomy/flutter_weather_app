@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/components/gradient_container.dart';
 import 'package:flutter_weather_app/components/spaced_column.dart';
 import 'package:flutter_weather_app/features/weather/weather_header.dart';
 import 'package:flutter_weather_app/features/weather/weather_list_tile.dart';
@@ -22,18 +23,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color(0xff7095b3),
-                Color(0xff7f94b7),
-                Color(0xff8b92ba),
-              ],
-            ),
-          ),
+        physics: const NeverScrollableScrollPhysics(),
+        child: GradientContainer(
           child: SpacedColumn(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

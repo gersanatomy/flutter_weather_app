@@ -12,12 +12,12 @@ class WeatherListTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
           gradient: const LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
             colors: [
-              Color(0xff7b98b7),
-              Color(0xff7f94b7),
               Color(0xff9599be),
+              Color(0xff7f94b7),
+              Color(0xff7b98b7),
             ],
           ),
           borderRadius: BorderRadius.circular(50)),
