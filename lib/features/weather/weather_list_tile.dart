@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/utils/app_date_prettify.dart';
+import 'package:flutter_weather_app/utils/app_weather_code_prettify.dart';
 
 class WeatherListTile extends StatelessWidget {
   const WeatherListTile(
@@ -38,7 +39,10 @@ class WeatherListTile extends StatelessWidget {
           ),
           SizedBox(
             height: 40,
-            child: Image.asset('assets/cloudy.png'),
+            child: Image.asset(
+              WeatherCodePrettify.getImageAsset(
+                  weather.weatherCode[index], true),
+            ),
           ),
           Container(
             margin: const EdgeInsets.only(left: 30),

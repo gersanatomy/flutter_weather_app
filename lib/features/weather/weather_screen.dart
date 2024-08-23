@@ -5,6 +5,7 @@ import 'package:flutter_weather_app/features/weather/weather_this_week.dart';
 import 'package:flutter_weather_app/features/weather/weather_today.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
+import 'package:flutter_weather_app/utils/app_date_prettify.dart';
 import 'package:flutter_weather_app/utils/app_geolocator.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -46,12 +47,21 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xfff2f8f9),
-        title: const Text(
-          'Weather Forecast',
-          style: TextStyle(fontSize: 25),
-        ),
-      ),
+          backgroundColor: const Color(0xfff2f8f9),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                address.first,
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+              ),
+              Text(
+                DatePrettify.weekdayMonthDayToString(DateTime.now()),
+                style: TextStyle(fontSize: 14),
+              ),
+            ],
+          )),
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: GradientContainer(

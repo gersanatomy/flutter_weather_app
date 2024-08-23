@@ -16,4 +16,10 @@ class DatePrettify {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(value);
   }
+
+  static String timeToString(String value) {
+    final DateTime date = DateTime.parse(value);
+    final DateFormat formatter = DateFormat('HH:mm');
+    return formatter.format(date);
+  }
 }
