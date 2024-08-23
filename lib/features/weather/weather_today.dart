@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/models/weather_model.dart';
 
-class WeatherHeader extends StatelessWidget {
-  const WeatherHeader({
-    super.key,
-  });
+class WeatherToday extends StatelessWidget {
+  const WeatherToday({super.key, required this.weather});
+
+  final WeatherDailyModel weather;
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +15,18 @@ class WeatherHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Container(
+          SizedBox(
             height: 120,
             child: Image.asset('assets/cloudy.png'),
           ),
-          Container(
-            child: const Column(
-              children: [
-                Text(
-                  '36°',
-                  style: TextStyle(fontSize: 40),
-                ),
-                Text('Partly Cloudy')
-              ],
-            ),
+          const Column(
+            children: [
+              Text(
+                '36°',
+                style: TextStyle(fontSize: 40),
+              ),
+              Text('Partly Cloudy')
+            ],
           ),
         ],
       ),

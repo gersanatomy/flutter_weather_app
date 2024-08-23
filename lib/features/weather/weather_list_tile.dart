@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/models/weather_model.dart';
+import 'package:flutter_weather_app/utils/app_date_prettify.dart';
 
 class WeatherListTile extends StatelessWidget {
-  const WeatherListTile({
-    super.key,
-  });
+  const WeatherListTile(
+      {super.key, required this.weather, required this.index});
+
+  final WeatherDailyModel weather;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +29,30 @@ class WeatherListTile extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text('Monday, Aug 24'),
-            Container(
+            SizedBox(
+                width: 100,
+                child: Text(
+                  '${DatePrettify.dayAndDateToString(weather.time[index])}',
+                  style: const TextStyle(color: Colors.white),
+                )),
+            SizedBox(
               height: 40,
               child: Image.asset('assets/cloudy.png'),
             ),
-            Text('36°'),
-            Text('24°'),
+            Container(
+              margin: EdgeInsets.only(left: 30),
+              child: Text(
+                '${weather.tempMax[index]}  |  ${weather.tempMin[index]}',
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  getWeatherAsset() {
+    // switch(){}
   }
 }

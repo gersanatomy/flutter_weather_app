@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_weather_app/features/splash/splash.dart';
+import 'package:flutter_weather_app/features/splash/splash_screen.dart';
 import 'package:flutter_weather_app/features/weather/weather_screen.dart';
 
 import '../../bloc/weather/weather_bloc.dart';
@@ -28,7 +28,7 @@ class _WeatherAppRouteState extends State<WeatherAppRoute> {
       builder: (context, state) {
         if (state is WeatherDailyLoaded) {
           return WeatherScreen(
-            weatherDailyModel: state.weatherDaily,
+            weather: state.weatherDaily,
             bloc: _bloc,
           );
         }
