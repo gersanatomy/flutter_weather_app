@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/services/weather_service.dart';
 
 class WeatherAppRoute extends StatefulWidget {
   const WeatherAppRoute({super.key});
@@ -8,6 +9,12 @@ class WeatherAppRoute extends StatefulWidget {
 }
 
 class _WeatherAppRouteState extends State<WeatherAppRoute> {
+  @override
+  void initState() {
+    super.initState();
+    WeatherService().getWeatherForecast();
+  }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
