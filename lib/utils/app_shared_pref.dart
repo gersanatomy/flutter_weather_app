@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPref {
@@ -12,19 +15,19 @@ class SharedPref {
         await SharedPreferences.getInstance().timeout(Duration(seconds: 1));
   }
 
-  Future<dynamic> getAccessToken() async {
+  Future<dynamic> getWeatherDaily() async {
     await initialize();
-    return preferences!.getString('access_token');
+    return preferences!.get('weather_daily');
   }
 
-  Future<dynamic> setAccessToken(String accessToken) async {
+  Future<dynamic> setWeatherDaily(WeatherDailyModel weather) async {
     await initialize();
-    return preferences!.setString('access_token', accessToken);
+    return preferences!.setString('weather_daily', jsonEncode(weather));
   }
 
-  Future<dynamic> removeAccessToken() async {
+  Future<dynamic> removeWeatherDaily() async {
     await initialize();
-    return preferences!.remove('access_token');
+    return preferences!.remove('weather_daily');
   }
 
   Future<void> clearUserPreferences() async {
