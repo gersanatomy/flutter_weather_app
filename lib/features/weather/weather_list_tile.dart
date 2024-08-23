@@ -12,7 +12,8 @@ class WeatherListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+      margin: EdgeInsets.fromLTRB(
+          20, 10, 20, weather.time.length - 1 == index ? 150 : 0),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
           gradient: const LinearGradient(
@@ -25,29 +26,28 @@ class WeatherListTile extends StatelessWidget {
             ],
           ),
           borderRadius: BorderRadius.circular(50)),
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-                width: 100,
-                child: Text(
-                  '${DatePrettify.dayAndDateToString(weather.time[index])}',
-                  style: const TextStyle(color: Colors.white),
-                )),
-            SizedBox(
-              height: 40,
-              child: Image.asset('assets/cloudy.png'),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SizedBox(
+            width: 100,
+            child: Text(
+              DatePrettify.dayAndDateToString(weather.time[index]),
+              style: const TextStyle(color: Colors.white),
             ),
-            Container(
-              margin: EdgeInsets.only(left: 30),
-              child: Text(
-                '${weather.tempMax[index]}  |  ${weather.tempMin[index]}',
-                style: const TextStyle(color: Colors.white),
-              ),
+          ),
+          SizedBox(
+            height: 40,
+            child: Image.asset('assets/cloudy.png'),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 30),
+            child: Text(
+              '${weather.tempMax[index]}°  |  ${weather.tempMin[index]}°',
+              style: const TextStyle(color: Colors.white),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

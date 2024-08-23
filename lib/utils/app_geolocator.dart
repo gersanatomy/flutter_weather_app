@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class AppGeoLocator {
@@ -27,5 +28,17 @@ class AppGeoLocator {
       return null;
     }
     return await Geolocator.getCurrentPosition();
+  }
+
+  static Future<List<String>> getCityProvince() async {
+    Position? position = await getUserCoordinates();
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        position?.latitude ?? 0.0, position?.longitude ?? 0.0);
+
+    String city = placemarks.first.locality ?? '';
+    String province = placemarks.first.subAdministrativeArea ?? '';
+
+    return [city, province];
   }
 }

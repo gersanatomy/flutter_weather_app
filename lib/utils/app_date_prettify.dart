@@ -7,6 +7,11 @@ class DatePrettify {
     return formatter.format(date);
   }
 
+  static String weekdayMonthDayToString(DateTime value) {
+    final DateFormat formatter = DateFormat('EEEE, MMM dd');
+    return formatter.format(value);
+  }
+
   static dateToString(DateTime value) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(value);

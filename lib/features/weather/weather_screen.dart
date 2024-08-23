@@ -5,6 +5,7 @@ import 'package:flutter_weather_app/features/weather/weather_this_week.dart';
 import 'package:flutter_weather_app/features/weather/weather_today.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
+import 'package:flutter_weather_app/utils/app_geolocator.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({
@@ -23,6 +24,24 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  List<String> address = ['', ''];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      address = await getCityProvince();
+      print('here: $address');
+      setState(() {});
+    });
+  }
+
+  getCityProvince() async {
+    List<String> res = await AppGeoLocator.getCityProvince();
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +53,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: GradientContainer(
           child: Column(
             children: [
-              WeatherToday(weather: widget.today),
+              WeatherToday(address: address, weather: widget.today),
               WeatherThisWeek(weather: widget.weekly)
             ],
           ),

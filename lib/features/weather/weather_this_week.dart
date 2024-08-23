@@ -37,7 +37,6 @@ class WeatherThisWeek extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: weather.time.length,
               itemBuilder: (context, i) {
