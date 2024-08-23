@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_weather_app/apis/api_exception.dart';
 
 class ApiRequest {
-  final String baseUrl = '';
+  final String baseUrl = 'https://api.open-meteo.com';
   final dio = Dio();
 
   Future<dynamic> get(String endpoint, Map<String, String> query) async {

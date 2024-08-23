@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class WeatherAppRoute extends StatefulWidget {
@@ -12,7 +11,10 @@ class _WeatherAppRouteState extends State<WeatherAppRoute> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SingleChildScrollView(),
+      backgroundColor: Colors.blue,
+      body: SingleChildScrollView(
+          // child: ,
+          ),
     );
   }
 }

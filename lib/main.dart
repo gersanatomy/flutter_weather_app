@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_app/features/weather_route.dart';
+import 'package:flutter_weather_app/features/weather/weather_route.dart';
 
 void main() {
   runApp(const MyApp());
