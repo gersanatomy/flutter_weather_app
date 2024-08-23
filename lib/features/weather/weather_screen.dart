@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/bloc/weather/weather_bloc.dart';
 import 'package:flutter_weather_app/components/gradient_container.dart';
 import 'package:flutter_weather_app/components/spaced_column.dart';
 import 'package:flutter_weather_app/features/weather/weather_header.dart';
 import 'package:flutter_weather_app/features/weather/weather_list_tile.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 
-class WeatherScreen extends StatelessWidget {
-  const WeatherScreen({super.key, required this.weatherDailyModel});
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({
+    super.key,
+    required this.weatherDailyModel,
+    required this.bloc,
+  });
 
   final WeatherDailyModel weatherDailyModel;
+  final WeatherBloc bloc;
+
+  @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +52,7 @@ class WeatherScreen extends StatelessWidget {
                     return const WeatherListTile();
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),

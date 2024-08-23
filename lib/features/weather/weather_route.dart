@@ -28,6 +28,7 @@ class _WeatherAppRouteState extends State<WeatherAppRoute> {
         if (state is WeatherDailyLoaded) {
           return WeatherScreen(
             weatherDailyModel: state.weatherDaily,
+            bloc: _bloc,
           );
         }
 
