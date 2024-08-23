@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app/features/weather/weather_screen.dart';
-import 'package:flutter_weather_app/services/weather_service.dart';
+
+import '../../bloc/weather/weather_bloc.dart';
 
 class WeatherAppRoute extends StatefulWidget {
   const WeatherAppRoute({super.key});
@@ -10,14 +12,27 @@ class WeatherAppRoute extends StatefulWidget {
 }
 
 class _WeatherAppRouteState extends State<WeatherAppRoute> {
+  final WeatherBloc _bloc = WeatherBloc();
+
   @override
   void initState() {
     super.initState();
-    WeatherService().getWeatherForecast();
+    _bloc.add(GetWeatherDetailsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return const WeatherScreen();
+    return BlocBuilder<WeatherBloc, WeatherState>(
+      bloc: _bloc,
+      builder: (context, state) {
+        if (state is WeatherDailyLoaded) {
+          return WeatherScreen(
+            weatherDailyModel: state.weatherDaily,
+          );
+        }
+
+        return Scaffold(body: CircularProgressIndicator());
+      },
+    );
   }
 }

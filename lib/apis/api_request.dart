@@ -28,6 +28,6 @@ class ApiRequest {
       dio.close();
     }
 
-    return response;
+    return response.data;
   }
 }

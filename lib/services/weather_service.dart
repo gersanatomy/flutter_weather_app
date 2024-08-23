@@ -3,7 +3,7 @@ import 'package:flutter_weather_app/utils/app_geolocator.dart';
 import 'package:geolocator/geolocator.dart';
 
 class WeatherService {
-  Future<void> getWeatherForecast() async {
+  Future<dynamic> getWeatherForecast() async {
     Position? position = await AppGeoLocator.getUserCoordinates();
 
     Map<String, String> query = {
@@ -13,6 +13,8 @@ class WeatherService {
           "temperature_2m_max,temperature_2m_min,sunrise,sunset,weather_code,precipitation_hours"
     };
 
-    final res = await WeatherApi().getWeatherForecast(query);
+    var res = await WeatherApi().getWeatherForecast(query);
+
+    return res;
   }
 }
