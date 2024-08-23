@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_weather_app/features/splash/splash.dart';
 import 'package:flutter_weather_app/features/weather/weather_screen.dart';
 
 import '../../bloc/weather/weather_bloc.dart';
@@ -32,7 +33,7 @@ class _WeatherAppRouteState extends State<WeatherAppRoute> {
           );
         }
 
-        return Scaffold(body: CircularProgressIndicator());
+        return const SplashScreen();
       },
     );
   }
