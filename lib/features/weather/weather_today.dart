@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_app/models/weather_model.dart';
+import 'package:flutter_weather_app/models/weather_today_model.dart';
 
 class WeatherToday extends StatelessWidget {
   const WeatherToday({super.key, required this.weather});
 
-  final WeatherDailyModel weather;
+  final WeatherTodayModel weather;
 
   @override
   Widget build(BuildContext context) {

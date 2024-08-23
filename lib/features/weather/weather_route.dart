@@ -26,9 +26,10 @@ class _WeatherAppRouteState extends State<WeatherAppRoute> {
     return BlocBuilder<WeatherBloc, WeatherState>(
       bloc: _bloc,
       builder: (context, state) {
-        if (state is WeatherDailyLoaded) {
+        if (state is WeatherDataFetched) {
           return WeatherScreen(
-            weather: state.weatherDaily,
+            today: state.weatherToday,
+            weekly: state.weatherWeekly,
             bloc: _bloc,
           );
         }

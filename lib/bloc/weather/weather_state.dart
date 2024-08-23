@@ -6,12 +6,11 @@ class InitialWeatherState extends WeatherState {}
 
 class LoadingState extends WeatherState {}
 
-class WeatherDailyLoaded extends WeatherState {
-  WeatherDailyLoaded({
-    required this.weatherDaily,
-  });
+class WeatherDataFetched extends WeatherState {
+  WeatherDataFetched({required this.weatherToday, required this.weatherWeekly});
 
-  final WeatherDailyModel weatherDaily;
+  final WeatherTodayModel weatherToday;
+  final WeatherDailyModel weatherWeekly;
 
-  List<Object> get props => [weatherDaily];
+  List<Object> get props => [weatherToday, weatherWeekly];
 }

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -19,7 +20,7 @@ class ApiRequest {
     } on SocketException {
       rethrow;
     } catch (err) {
-      print('GET Server Error');
+      log('GET Server Error $endpoint $query');
 
       throw ApiException(
           statusCode: response?.statusCode ?? 000,

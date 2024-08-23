@@ -4,15 +4,18 @@ import 'package:flutter_weather_app/components/gradient_container.dart';
 import 'package:flutter_weather_app/features/weather/weather_this_week.dart';
 import 'package:flutter_weather_app/features/weather/weather_today.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
+import 'package:flutter_weather_app/models/weather_today_model.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({
     super.key,
-    required this.weather,
+    required this.today,
+    required this.weekly,
     required this.bloc,
   });
 
-  final WeatherDailyModel weather;
+  final WeatherTodayModel today;
+  final WeatherDailyModel weekly;
   final WeatherBloc bloc;
 
   @override
@@ -34,8 +37,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
         child: GradientContainer(
           child: Column(
             children: [
-              WeatherToday(weather: widget.weather),
-              WeatherThisWeek(weather: widget.weather)
+              WeatherToday(weather: widget.today),
+              WeatherThisWeek(weather: widget.weekly)
             ],
           ),
         ),

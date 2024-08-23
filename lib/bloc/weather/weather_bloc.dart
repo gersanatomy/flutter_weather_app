@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
+import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/services/weather_service.dart';
 
 import '../../utils/app_shared_pref.dart';
@@ -21,23 +22,32 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       GetWeatherDetailsEvent event, Emitter<WeatherState> emit) async {
     try {
       emit(LoadingState());
-      var response = await WeatherService().getWeatherForecast();
+      var weatherToday = await WeatherService().getWeatherTodayForecast();
+      var weatherWeekly = await WeatherService().getWeatherForecast();
 
-      SharedPref()
-          .setWeatherDaily(WeatherDailyModel.fromJson(response['daily']));
+      final today = WeatherTodayModel.fromJson(weatherToday['hourly']);
+      final weekly = WeatherDailyModel.fromJson(weatherWeekly['daily']);
+
+      SharedPref().setWeatherToday(today);
+      SharedPref().setWeatherWeekly(weekly);
 
       emit(
-        WeatherDailyLoaded(
-          weatherDaily: WeatherDailyModel.fromJson(response['daily']),
+        WeatherDataFetched(
+          weatherToday: today,
+          weatherWeekly: weekly,
         ),
       );
     } catch (e) {
       log(e.toString());
-      var sharedPref = await SharedPref().getWeatherDaily();
+      var localDataDaily = await SharedPref().getWeatherToday();
+      var localDataWeekly = await SharedPref().getWeatherWeekly();
+
       emit(
-        WeatherDailyLoaded(
-          weatherDaily: WeatherDailyModel.fromJson(
-              sharedPref != null ? jsonDecode(sharedPref) : {}),
+        WeatherDataFetched(
+          weatherToday: WeatherTodayModel.fromJson(
+              localDataDaily != null ? jsonDecode(localDataDaily) : {}),
+          weatherWeekly: WeatherDailyModel.fromJson(
+              localDataWeekly != null ? jsonDecode(localDataWeekly) : {}),
         ),
       );
     }
