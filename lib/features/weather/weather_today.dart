@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/features/weather/weather_per_hour_tile.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
-import 'package:flutter_weather_app/utils/app_date_prettify.dart';
 import 'package:flutter_weather_app/utils/app_weather_code_prettify.dart';
 
 class WeatherToday extends StatefulWidget {

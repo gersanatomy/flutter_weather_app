@@ -66,8 +66,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
         child: GradientContainer(
           child: Column(
             children: [
-              WeatherToday(address: address, weather: widget.today),
-              WeatherThisWeek(weather: widget.weekly)
+              widget.today.time.isEmpty
+                  ? Container()
+                  : WeatherToday(address: address, weather: widget.today),
+              widget.weekly.time.isEmpty
+                  ? Container()
+                  : WeatherThisWeek(weather: widget.weekly)
             ],
           ),
         ),
