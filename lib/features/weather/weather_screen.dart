@@ -29,11 +29,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       address = await getCityProvince();
-      setState(() {});
     });
   }
 
@@ -57,7 +55,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               ),
               Text(
                 DatePrettify.weekdayMonthDayToString(DateTime.now()),
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
             ],
           )),
@@ -66,12 +64,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
         child: GradientContainer(
           child: Column(
             children: [
-              widget.today.time.isEmpty
-                  ? Container()
-                  : WeatherToday(address: address, weather: widget.today),
-              widget.weekly.time.isEmpty
-                  ? Container()
-                  : WeatherThisWeek(weather: widget.weekly)
+              if (widget.today.time.isNotEmpty)
+                WeatherToday(address: address, weather: widget.today)
+              else
+                Container(),
+              if (widget.weekly.time.isNotEmpty)
+                WeatherThisWeek(weather: widget.weekly)
+              else
+                Container()
             ],
           ),
         ),
