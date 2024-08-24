@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/services/weather_service.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import '../../utils/app_shared_pref.dart';
 
 part 'weather_event.dart';
 part 'weather_state.dart';
 
-class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
+class WeatherBloc extends HydratedBloc<WeatherEvent, WeatherState> {
   WeatherBloc() : super(InitialWeatherState()) {
     on<GetWeatherDetailsEvent>(
       (event, emit) => _getWeatherDetails(event, emit),
@@ -53,5 +53,17 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         ),
       );
     }
+  }
+
+  @override
+  WeatherState? fromJson(Map<String, dynamic> json) {
+    // TODO: implement fromJson
+    throw UnimplementedError();
+  }
+
+  @override
+  Map<String, dynamic>? toJson(WeatherState state) {
+    // TODO: implement toJson
+    throw UnimplementedError();
   }
 }
