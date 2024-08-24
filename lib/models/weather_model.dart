@@ -1,42 +1,40 @@
-class WeatherDailyModel {
-  WeatherDailyModel({
-    this.time = const <dynamic>[],
-    this.tempMin = const <dynamic>[],
-    this.tempMax = const <dynamic>[],
-    this.sunrise = const <dynamic>[],
-    this.sunset = const <dynamic>[],
-    this.weatherCode = const <dynamic>[],
-    this.precipitationHours = const <dynamic>[],
-  });
+import 'dart:convert';
 
-  late List<dynamic> time;
-  late List<dynamic> tempMin;
-  late List<dynamic> tempMax;
-  late List<dynamic> sunrise;
-  late List<dynamic> sunset;
-  late List<dynamic> weatherCode;
-  late List<dynamic> precipitationHours;
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'serializers.dart';
+part 'weather_model.g.dart';
 
-  WeatherDailyModel.fromJson(Map<String, dynamic> json) {
-    time = json['time'] ?? [];
-    tempMin = json['temperature_2m_min'] ?? <dynamic>[];
-    tempMax = json['temperature_2m_max'] ?? <dynamic>[];
-    sunrise = json['sunrise'] ?? <dynamic>[];
-    sunset = json['sunset'] ?? <dynamic>[];
-    weatherCode = json['weather_code'] ?? <dynamic>[];
-    precipitationHours = json['precipitation_hours'] ?? <dynamic>[];
+abstract class WeatherDailyModel
+    implements Built<WeatherDailyModel, WeatherDailyModelBuilder> {
+  BuiltList<String> get time;
+  @BuiltValueField(wireName: "temperature_2m_min")
+  BuiltList<double> get tempMin;
+  @BuiltValueField(wireName: "temperature_2m_max")
+  BuiltList<double> get tempMax;
+  BuiltList<String> get sunrise;
+  BuiltList<String> get sunset;
+  @BuiltValueField(wireName: "weather_code")
+  BuiltList<int> get weatherCode;
+  @BuiltValueField(wireName: "precipitation_hours")
+  BuiltList<double> get precipitationHours;
+
+  WeatherDailyModel._();
+
+  factory WeatherDailyModel([Function(WeatherDailyModelBuilder b) updates]) =
+      _$WeatherDailyModel;
+
+  String toJson() {
+    return json
+        .encode(serializers.serializeWith(WeatherDailyModel.serializer, this));
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-
-    data['time'] = time;
-    data['temperature_2m_min'] = tempMin;
-    data['temperature_2m_max'] = tempMax;
-    data['sunrise'] = sunrise;
-    data['sunset'] = sunset;
-    data['weather_code'] = weatherCode;
-    data['precipitation_hours'] = precipitationHours;
-    return data;
+  static WeatherDailyModel fromJson(Map<String, dynamic> data) {
+    return serializers.deserializeWith(WeatherDailyModel.serializer, data) ??
+        WeatherDailyModel();
   }
+
+  static Serializer<WeatherDailyModel> get serializer =>
+      _$weatherDailyModelSerializer;
 }
