@@ -23,6 +23,11 @@ class DatePrettify {
     return formatter.format(date);
   }
 
+  static dateNow() {
+    final DateFormat formatter = DateFormat('EEEE, MMM dd');
+    return formatter.format(DateTime.now());
+  }
+
   static bool isDayTime({String value = ''}) {
     final DateTime date;
     if (value == '') {

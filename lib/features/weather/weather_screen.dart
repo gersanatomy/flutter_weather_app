@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/bloc/weather/weather_bloc.dart';
 import 'package:flutter_weather_app/components/gradient_container.dart';
+import 'package:flutter_weather_app/constants/colors.dart';
+import 'package:flutter_weather_app/constants/textstyles.dart';
 import 'package:flutter_weather_app/features/weather/weather_this_week.dart';
 import 'package:flutter_weather_app/features/weather/weather_today.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
@@ -44,21 +46,21 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: const Color(0xfff2f8f9),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                address.first,
-                style:
-                    const TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-              ),
-              Text(
-                DatePrettify.weekdayMonthDayToString(DateTime.now()),
-                style: const TextStyle(fontSize: 14),
-              ),
-            ],
-          )),
+        backgroundColor: AppColor.background,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              address.first,
+              style: AppTextStyle.header,
+            ),
+            Text(
+              DatePrettify.dateNow(),
+              style: AppTextStyle.body,
+            ),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: GradientContainer(
