@@ -1,26 +1,34 @@
-class WeatherTodayModel {
-  WeatherTodayModel({
-    this.time = const <dynamic>[],
-    this.temp = const <dynamic>[],
-    this.weatherCode = const <dynamic>[],
-  });
+import 'dart:convert';
 
-  late List<dynamic> time;
-  late List<dynamic> temp;
-  late List<dynamic> weatherCode;
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'serializers.dart';
+part 'weather_today_model.g.dart';
 
-  WeatherTodayModel.fromJson(Map<String, dynamic> json) {
-    time = json['time'] ?? [];
-    temp = json['temperature_2m'] ?? <dynamic>[];
-    weatherCode = json['weather_code'] ?? <dynamic>[];
+abstract class WeatherTodayModel
+    implements Built<WeatherTodayModel, WeatherTodayModelBuilder> {
+  BuiltList<String> get time;
+  @BuiltValueField(wireName: "temperature_2m")
+  BuiltList<double> get temp;
+  @BuiltValueField(wireName: "weather_code")
+  BuiltList<int> get weatherCode;
+
+  WeatherTodayModel._();
+
+  factory WeatherTodayModel([Function(WeatherTodayModelBuilder b) updates]) =
+      _$WeatherTodayModel;
+
+  String toJson() {
+    return json
+        .encode(serializers.serializeWith(WeatherTodayModel.serializer, this));
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-
-    data['time'] = time;
-    data['temperature_2m'] = temp;
-    data['weather_code'] = weatherCode;
-    return data;
+  static WeatherTodayModel fromJson(Map<String, dynamic> data) {
+    return serializers.deserializeWith(WeatherTodayModel.serializer, data) ??
+        WeatherTodayModel();
   }
+
+  static Serializer<WeatherTodayModel> get serializer =>
+      _$weatherTodayModelSerializer;
 }
