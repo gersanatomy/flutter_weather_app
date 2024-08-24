@@ -33,7 +33,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       address = await getCityProvince();
-      print('here: $address');
       setState(() {});
     });
   }

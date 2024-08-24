@@ -41,7 +41,7 @@ class WeatherListTile extends StatelessWidget {
             height: 40,
             child: Image.asset(
               WeatherCodePrettify.getImageAsset(
-                  weather.weatherCode[index], true),
+                  weather.weatherCode[index], weather.time[index]),
             ),
           ),
           Container(

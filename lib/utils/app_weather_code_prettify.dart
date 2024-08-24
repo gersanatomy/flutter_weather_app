@@ -1,3 +1,5 @@
+import 'package:flutter_weather_app/utils/app_date_prettify.dart';
+
 class WeatherCodePrettify {
   static getDescription(int value) {
     switch (value) {
@@ -32,7 +34,9 @@ class WeatherCodePrettify {
     }
   }
 
-  static getImageAsset(int value, bool isDayTime) {
+  static getImageAsset(int value, String time) {
+    bool isDayTime = DatePrettify.isDayTime(value: time);
+
     switch (value) {
       case 0:
         return isDayTime ? 'assets/day.png' : 'assets/night.png';

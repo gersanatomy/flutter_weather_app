@@ -22,4 +22,15 @@ class DatePrettify {
     final DateFormat formatter = DateFormat('HH:mm');
     return formatter.format(date);
   }
+
+  static bool isDayTime({String value = ''}) {
+    final DateTime date;
+    if (value == '') {
+      date = DateTime.now();
+    } else {
+      date = DateTime.parse(value);
+    }
+
+    return date.hour < 18 && date.hour > 5 ? true : false;
+  }
 }

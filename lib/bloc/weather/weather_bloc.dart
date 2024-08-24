@@ -28,6 +28,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       final today = WeatherTodayModel.fromJson(weatherToday['hourly']);
       final weekly = WeatherDailyModel.fromJson(weatherWeekly['daily']);
 
+      log('here: today $today');
+
       SharedPref().setWeatherToday(today);
       SharedPref().setWeatherWeekly(weekly);
 
