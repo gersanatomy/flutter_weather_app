@@ -38,11 +38,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
           children: [
             Text(
               widget.today.address.first,
-              style: AppTextStyle.header,
+              style: AppText.header,
             ),
             Text(
               DatePrettify.dateNow(),
-              style: AppTextStyle.body,
+              style: AppText.body,
             ),
           ],
         ),
