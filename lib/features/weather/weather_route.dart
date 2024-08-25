@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app/bloc/weather/weather_bloc.dart';
 import 'package:flutter_weather_app/features/splash/splash_screen.dart';
 import 'package:flutter_weather_app/features/weather/weather_screen.dart';
+import 'package:flutter_weather_app/services/weather_service.dart';
 
 class WeatherAppRoute extends StatefulWidget {
   const WeatherAppRoute({super.key});
@@ -12,7 +13,7 @@ class WeatherAppRoute extends StatefulWidget {
 }
 
 class _WeatherAppRouteState extends State<WeatherAppRoute> {
-  final WeatherBloc _bloc = WeatherBloc();
+  final WeatherBloc _bloc = WeatherBloc(WeatherService());
 
   @override
   void initState() {

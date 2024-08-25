@@ -32,14 +32,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      address = await getCityProvince();
-    });
-  }
-
-  getCityProvince() async {
-    List<String> res = await AppGeoLocator.getCityProvince();
-    return res;
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async => await _getCityProvince(),
+    );
   }
 
   @override
@@ -66,18 +61,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
         child: GradientContainer(
           child: Column(
             children: [
-              if (widget.today.time.isNotEmpty)
-                WeatherToday(address: address, weather: widget.today)
-              else
-                Container(),
-              if (widget.weekly.time.isNotEmpty)
-                WeatherThisWeek(weather: widget.weekly)
-              else
-                Container()
+              WeatherToday(address: address, weather: widget.today),
+              WeatherThisWeek(weather: widget.weekly)
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _getCityProvince() async {
+    address = await AppGeoLocator.getCityProvince();
+    setState(() {});
   }
 }

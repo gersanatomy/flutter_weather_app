@@ -1,16 +1,20 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/services/weather_service.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'weather_event.dart';
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
-  WeatherBloc() : super(InitialWeatherState()) {
+  final WeatherService service;
+
+  WeatherBloc(this.service) : super(InitialWeatherState()) {
     on<GetWeatherDetailsEvent>(
       (event, emit) => _getWeatherDetails(event, emit),
     );
@@ -20,14 +24,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
       GetWeatherDetailsEvent event, Emitter<WeatherState> emit) async {
     try {
       emit(LoadingState());
-      var weatherToday = await WeatherService().getWeatherTodayForecast();
-      var weatherWeekly = await WeatherService().getWeatherForecast();
+      var weatherToday = await service.getWeatherTodayForecast();
+      var weatherWeekly = await service.getWeatherForecast();
 
       final today = WeatherTodayModel.fromJson(weatherToday['hourly']);
       final weekly = WeatherDailyModel.fromJson(weatherWeekly['daily']);
 
-      HydratedBloc.storage.write('weather_today', today.toJson());
-      HydratedBloc.storage.write('weather_daily', weekly.toJson());
+      HydratedBloc.storage.write('today', weatherToday['hourly']);
+      HydratedBloc.storage.write('weekly', weatherWeekly['daily']);
 
       emit(
         WeatherDataFetched(
@@ -37,14 +41,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
       );
     } catch (e) {
       log(e.toString());
-      var localDataDaily = HydratedBloc.storage.read('weather_today');
-      var localDataWeekly = HydratedBloc.storage.read('weather_daily');
+      var localToday = HydratedBloc.storage.read('today');
+      var localWeekly = HydratedBloc.storage.read('weekly');
       emit(
         WeatherDataFetched(
           weatherToday: WeatherTodayModel.fromJson(
-              localDataDaily != null ? jsonDecode(localDataDaily) : {}),
+              localToday != null ? jsonDecode(localToday) : {}),
           weatherWeekly: WeatherDailyModel.fromJson(
-              localDataWeekly != null ? jsonDecode(localDataWeekly) : {}),
+              localWeekly != null ? jsonDecode(localWeekly) : {}),
         ),
       );
     }

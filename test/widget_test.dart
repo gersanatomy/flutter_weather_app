@@ -7,17 +7,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_weather_app/features/weather/weather_route.dart';
 
 import 'package:flutter_weather_app/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Splash screen should diplay while api is fetching',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const WeatherAppRoute());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Weather'), findsOneWidget);
+    expect(find.text('Forecast'), findsOneWidget);
+    expect(find.text(''), findsNothing);
 
     // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
