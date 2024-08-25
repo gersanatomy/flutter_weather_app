@@ -154,10 +154,12 @@ class MockWeatherModels {
   }
 
   static WeatherTodayModel setToday() {
-    return WeatherTodayModel.fromJson(getToday());
+    var data = getToday();
+    return WeatherTodayModel.fromJson(data['hourly']);
   }
 
   static WeatherDailyModel setWeekly() {
-    return WeatherDailyModel.fromJson(getWeekly());
+    var data = getWeekly();
+    return WeatherDailyModel.fromJson(data['daily']);
   }
 }
