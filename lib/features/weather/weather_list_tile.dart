@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/constants/textstyles.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/utils/app_date_prettify.dart';
 import 'package:flutter_weather_app/utils/app_weather_code_prettify.dart';
@@ -32,9 +33,8 @@ class WeatherListTile extends StatelessWidget {
         children: [
           SizedBox(
             width: 100,
-            child: Text(
+            child: _details(
               DatePrettify.dayAndDateToString(weather.time[index]),
-              style: const TextStyle(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -46,9 +46,8 @@ class WeatherListTile extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.only(left: 30),
-            child: Text(
+            child: _details(
               '${weather.tempMax[index]}°  |  ${weather.tempMin[index]}°',
-              style: const TextStyle(color: Colors.white),
             ),
           ),
         ],
@@ -56,7 +55,10 @@ class WeatherListTile extends StatelessWidget {
     );
   }
 
-  getWeatherAsset() {
-    // switch(){}
+  Text _details(value) {
+    return Text(
+      value,
+      style: AppText.light,
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/constants/textstyles.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/utils/app_date_prettify.dart';
 import 'package:flutter_weather_app/utils/app_weather_code_prettify.dart';
@@ -21,7 +22,7 @@ class WeatherPerHourTile extends StatelessWidget {
         children: [
           Text(
             DatePrettify.timeToString(weather.time[index]),
-            style: TextStyle(color: Colors.grey[400]),
+            style: AppText.disable,
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10),
@@ -35,7 +36,7 @@ class WeatherPerHourTile extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10),
             child: Text(
               '${weather.temp[index]}°',
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: AppText.heavy,
             ),
           ),
         ],

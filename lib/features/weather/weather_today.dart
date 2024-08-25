@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/constants/colors.dart';
+import 'package:flutter_weather_app/constants/textstyles.dart';
 import 'package:flutter_weather_app/features/weather/weather_per_hour_tile.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/utils/app_weather_code_prettify.dart';
@@ -18,7 +20,7 @@ class _WeatherTodayState extends State<WeatherToday> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xfff2f8f9),
+      color: AppColor.background,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +43,7 @@ class _WeatherTodayState extends State<WeatherToday> {
                 children: [
                   Text(
                     '${widget.weather.temp.first}°',
-                    style: const TextStyle(fontSize: 40),
+                    style: AppText.feature,
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 20),
@@ -80,9 +82,7 @@ class _WeatherTodayState extends State<WeatherToday> {
                 child: Text(
                   showPerHour ? 'Hide Details' : "Show More Details",
                   style: TextStyle(
-                    color: showPerHour
-                        ? Colors.grey[400]
-                        : const Color(0xff7f94b7),
+                    color: showPerHour ? AppColor.disable : AppColor.highlight,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
