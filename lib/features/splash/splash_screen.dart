@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/components/image_asset.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,9 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
           height: 300,
           child: Column(
             children: [
-              Image.asset(
-                'assets/weather.png',
-                width: 100,
+              const ImageAsset(
+                key: Key('splash'),
+                url: 'assets/weather.png',
               ),
               const Text(
                 'Weather',

@@ -6,26 +6,45 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_weather_app/features/weather/weather_route.dart';
+import 'package:flutter_weather_app/bloc/weather/weather_bloc.dart';
+import 'package:flutter_weather_app/features/splash/splash_screen.dart';
+import 'package:flutter_weather_app/features/weather/weather_screen.dart';
 
-import 'package:flutter_weather_app/main.dart';
+import 'mock/mock_hydrated_bloc.dart';
+import 'mock/mock_weather_models.dart';
+import 'unit_testing/weather_bloc_unit_test.mocks.dart';
+
+Widget makeTestableWidget(Widget child) {
+  return MaterialApp(
+    home: BlocBuilder<WeatherBloc, WeatherState>(
+      bloc: WeatherBloc(MockWeatherService())..add(GetWeatherDetailsEvent()),
+      builder: (context, state) {
+        return child;
+      },
+    ),
+  );
+}
 
 void main() {
-  testWidgets('Splash screen should diplay while api is fetching',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(const WeatherAppRoute());
+  initHydratedBloc();
 
-    expect(find.text('Weather'), findsOneWidget);
-    expect(find.text('Forecast'), findsOneWidget);
-    expect(find.text(''), findsNothing);
+  group('Find Elements', () {
+    final today = MockWeatherModels.setToday();
+    final weekly = MockWeatherModels.setWeekly();
+    final mockService = MockWeatherService();
+    final weatherbloc = WeatherBloc(mockService);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    testWidgets('Find splash screen elements successfully',
+        (WidgetTester tester) async {
+      SplashScreen splashPage = const SplashScreen();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      await tester.pumpWidget(makeTestableWidget(splashPage));
+
+      expect(find.byKey(const Key('splash')), findsOneWidget);
+      expect(find.text('Weather'), findsOneWidget);
+      expect(find.text('Forecast'), findsOneWidget);
+    });
   });
 }
