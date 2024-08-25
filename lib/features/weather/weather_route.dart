@@ -34,6 +34,14 @@ class _WeatherAppRouteState extends State<WeatherAppRoute> {
           );
         }
 
+        if (state is WeatherDataEmpty) {
+          return const Scaffold(
+            body: Center(
+              child: Text("Here"),
+            ),
+          );
+        }
+
         return const SplashScreen();
       },
     );

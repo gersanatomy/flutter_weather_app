@@ -6,7 +6,6 @@ import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/services/weather_service.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 
 part 'weather_event.dart';
 part 'weather_state.dart';
@@ -30,8 +29,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
       final today = WeatherTodayModel.fromJson(weatherToday['hourly']);
       final weekly = WeatherDailyModel.fromJson(weatherWeekly['daily']);
 
-      HydratedBloc.storage.write('today', weatherToday['hourly']);
-      HydratedBloc.storage.write('weekly', weatherWeekly['daily']);
+      HydratedBloc.storage.write('today', today.toJson());
+      HydratedBloc.storage.write('weekly', weekly.toJson());
 
       emit(
         WeatherDataFetched(
@@ -43,12 +42,16 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
       log(e.toString());
       var localToday = HydratedBloc.storage.read('today');
       var localWeekly = HydratedBloc.storage.read('weekly');
+
+      if (localToday == null || localWeekly == null) {
+        emit(WeatherDataEmpty());
+        return;
+      }
+
       emit(
         WeatherDataFetched(
-          weatherToday: WeatherTodayModel.fromJson(
-              localToday != null ? jsonDecode(localToday) : {}),
-          weatherWeekly: WeatherDailyModel.fromJson(
-              localWeekly != null ? jsonDecode(localWeekly) : {}),
+          weatherToday: WeatherTodayModel.fromJson(jsonDecode(localToday)),
+          weatherWeekly: WeatherDailyModel.fromJson(jsonDecode(localWeekly)),
         ),
       );
     }
