@@ -26,7 +26,7 @@ void main() {
     final today = MockWeatherModels.setToday();
     final weekly = MockWeatherModels.setWeekly();
 
-    testWidgets('Find splash screen elements successfully',
+    testWidgets('Splash: display elements successfully',
         (WidgetTester tester) async {
       SplashScreen splashPage = const SplashScreen();
 
@@ -37,7 +37,7 @@ void main() {
       expect(find.text('Forecast'), findsOneWidget);
     });
 
-    testWidgets('Find weather screen elements successfully',
+    testWidgets('Weather: display elements successfully',
         (WidgetTester tester) async {
       WeatherScreen weatherPage = WeatherScreen(
         today: today,

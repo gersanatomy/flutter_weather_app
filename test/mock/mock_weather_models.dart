@@ -94,8 +94,9 @@ class MockWeatherModels {
           45,
           45,
           45
-        ]
-      }
+        ],
+        "address": ['', '']
+      },
     };
   }
 
