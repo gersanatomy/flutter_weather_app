@@ -6,18 +6,12 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_weather_app/bloc/weather/weather_bloc.dart';
 import 'package:flutter_weather_app/features/splash/splash_screen.dart';
 import 'package:flutter_weather_app/features/weather/weather_screen.dart';
-import 'package:flutter_weather_app/services/weather_service.dart';
-import 'package:mocktail/mocktail.dart';
 
 import 'mock/mock_hydrated_bloc.dart';
 import 'mock/mock_weather_models.dart';
-
-class MockWeatherService extends Mock implements WeatherService {}
 
 Widget makeTestableWidget(Widget child) {
   return MaterialApp(
