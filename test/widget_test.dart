@@ -21,12 +21,7 @@ class MockWeatherService extends Mock implements WeatherService {}
 
 Widget makeTestableWidget(Widget child) {
   return MaterialApp(
-    home: BlocBuilder<WeatherBloc, WeatherState>(
-      bloc: WeatherBloc(MockWeatherService())..add(GetWeatherDetailsEvent()),
-      builder: (context, state) {
-        return child;
-      },
-    ),
+    home: child,
   );
 }
 
@@ -36,8 +31,6 @@ void main() {
   group('Find Elements', () {
     final today = MockWeatherModels.setToday();
     final weekly = MockWeatherModels.setWeekly();
-    final mockService = MockWeatherService();
-    final weatherbloc = WeatherBloc(mockService);
 
     testWidgets('Find splash screen elements successfully',
         (WidgetTester tester) async {
