@@ -4,8 +4,8 @@ import 'package:flutter_weather_app/bloc/weather/weather_bloc.dart';
 import 'package:flutter_weather_app/services/weather_service.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../mock/mock_hydrated_bloc.dart';
-import '../mock/mock_setups.dart';
+import 'mock/mock_hydrated_bloc.dart';
+import 'mock/mock_setups.dart';
 
 class MockWeatherService extends Mock implements WeatherService {}
 
@@ -20,12 +20,12 @@ void main() {
       weatherBloc = WeatherBloc(mockService);
     });
 
-    test('initial state is correct', () {
+    test('Emits [InitialWeatherState] correctly', () {
       expect(weatherBloc.state, InitialWeatherState());
     });
 
     blocTest<WeatherBloc, WeatherState>(
-      'happy path - emits [WeatherDataFetched] from service',
+      'Emits [WeatherDataFetched] from service',
       setUp: () {
         MockWeatherSetup.successGetWeather(mockService);
         MockWeatherSetup.successGetWeatherToday(mockService);
@@ -37,7 +37,7 @@ void main() {
     );
 
     blocTest<WeatherBloc, WeatherState>(
-      'emits [WeatherDataFetched] with data from local storage',
+      'Emits [WeatherDataFetched] with data from local storage',
       setUp: () {
         MockWeatherSetup.successGetWeather(mockService);
         MockWeatherSetup.failedGetWeatherToday(mockService);
@@ -49,7 +49,7 @@ void main() {
     );
 
     blocTest<WeatherBloc, WeatherState>(
-      'emits [WeatherDataEmpty] when both from api and local storage fails',
+      'Emits [WeatherDataEmpty] when both from api and local storage fails',
       setUp: () {
         MockWeatherSetup.failedGetWeather(mockService);
         MockWeatherSetup.failedGetWeatherToday(mockService);

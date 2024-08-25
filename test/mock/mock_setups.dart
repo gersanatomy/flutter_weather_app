@@ -1,5 +1,5 @@
 import 'package:mocktail/mocktail.dart';
-import '../unit_testing/weather_bloc_unit_test.dart';
+import '../unit_test.dart';
 import 'mock_weather_models.dart';
 
 class MockWeatherSetup {
