@@ -4,10 +4,9 @@ import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/utils/app_weather_code_prettify.dart';
 
 class WeatherToday extends StatefulWidget {
-  const WeatherToday({super.key, required this.weather, required this.address});
+  const WeatherToday({super.key, required this.weather});
 
   final WeatherTodayModel weather;
-  final List<String> address;
 
   @override
   State<WeatherToday> createState() => _WeatherTodayState();

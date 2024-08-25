@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/services/weather_service.dart';
+import 'package:flutter_weather_app/utils/app_geolocator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'weather_event.dart';
@@ -26,11 +27,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
       var weatherToday = await service.getWeatherTodayForecast();
       var weatherWeekly = await service.getWeatherForecast();
 
-      final today = WeatherTodayModel.fromJson(weatherToday['hourly']);
-      final weekly = WeatherDailyModel.fromJson(weatherWeekly['daily']);
-
-      HydratedBloc.storage.write('today', today.toJson());
-      HydratedBloc.storage.write('weekly', weekly.toJson());
+      final today = await setWeatherToday(weatherToday);
+      final weekly = await setWeatherWeekly(weatherWeekly);
 
       emit(
         WeatherDataFetched(
@@ -40,18 +38,19 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
       );
     } catch (e) {
       log(e.toString());
-      var localToday = HydratedBloc.storage.read('today');
-      var localWeekly = HydratedBloc.storage.read('weekly');
 
-      if (localToday == null || localWeekly == null) {
+      var today = HydratedBloc.storage.read('today');
+      var weekly = HydratedBloc.storage.read('weekly');
+
+      if (isStorageEmpty(today, weekly)) {
         emit(WeatherDataEmpty());
         return;
       }
 
       emit(
         WeatherDataFetched(
-          weatherToday: WeatherTodayModel.fromJson(jsonDecode(localToday)),
-          weatherWeekly: WeatherDailyModel.fromJson(jsonDecode(localWeekly)),
+          weatherToday: WeatherTodayModel.fromJson(jsonDecode(today)),
+          weatherWeekly: WeatherDailyModel.fromJson(jsonDecode(weekly)),
         ),
       );
     }
@@ -86,5 +85,24 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
       'today': null,
       'weekly': null,
     };
+  }
+
+  Future<WeatherTodayModel> setWeatherToday(weatherToday) async {
+    weatherToday['address'] = await AppGeoLocator.getCityProvince();
+    final today = WeatherTodayModel.fromJson(weatherToday['hourly']);
+    HydratedBloc.storage.write('today', today.toJson());
+
+    return today;
+  }
+
+  Future<WeatherDailyModel> setWeatherWeekly(weatherWeekly) async {
+    final weekly = WeatherDailyModel.fromJson(weatherWeekly['daily']);
+    HydratedBloc.storage.write('weekly', weekly.toJson());
+
+    return weekly;
+  }
+
+  bool isStorageEmpty(localToday, localWeekly) {
+    return localToday == null || localWeekly == null;
   }
 }

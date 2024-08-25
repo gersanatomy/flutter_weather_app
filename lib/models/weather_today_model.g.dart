@@ -32,6 +32,10 @@ class _$WeatherTodayModelSerializer
       serializers.serialize(object.weatherCode,
           specifiedType:
               const FullType(BuiltList, const [const FullType(int)])),
+      'address',
+      serializers.serialize(object.address,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
     ];
 
     return result;
@@ -67,6 +71,12 @@ class _$WeatherTodayModelSerializer
                       const FullType(BuiltList, const [const FullType(int)]))!
               as BuiltList<Object?>);
           break;
+        case 'address':
+          result.address.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
       }
     }
 
@@ -81,18 +91,25 @@ class _$WeatherTodayModel extends WeatherTodayModel {
   final BuiltList<double> temp;
   @override
   final BuiltList<int> weatherCode;
+  @override
+  final BuiltList<String> address;
 
   factory _$WeatherTodayModel(
           [void Function(WeatherTodayModelBuilder)? updates]) =>
       (new WeatherTodayModelBuilder()..update(updates))._build();
 
   _$WeatherTodayModel._(
-      {required this.time, required this.temp, required this.weatherCode})
+      {required this.time,
+      required this.temp,
+      required this.weatherCode,
+      required this.address})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(time, r'WeatherTodayModel', 'time');
     BuiltValueNullFieldError.checkNotNull(temp, r'WeatherTodayModel', 'temp');
     BuiltValueNullFieldError.checkNotNull(
         weatherCode, r'WeatherTodayModel', 'weatherCode');
+    BuiltValueNullFieldError.checkNotNull(
+        address, r'WeatherTodayModel', 'address');
   }
 
   @override
@@ -109,7 +126,8 @@ class _$WeatherTodayModel extends WeatherTodayModel {
     return other is WeatherTodayModel &&
         time == other.time &&
         temp == other.temp &&
-        weatherCode == other.weatherCode;
+        weatherCode == other.weatherCode &&
+        address == other.address;
   }
 
   @override
@@ -118,6 +136,7 @@ class _$WeatherTodayModel extends WeatherTodayModel {
     _$hash = $jc(_$hash, time.hashCode);
     _$hash = $jc(_$hash, temp.hashCode);
     _$hash = $jc(_$hash, weatherCode.hashCode);
+    _$hash = $jc(_$hash, address.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -127,7 +146,8 @@ class _$WeatherTodayModel extends WeatherTodayModel {
     return (newBuiltValueToStringHelper(r'WeatherTodayModel')
           ..add('time', time)
           ..add('temp', temp)
-          ..add('weatherCode', weatherCode))
+          ..add('weatherCode', weatherCode)
+          ..add('address', address))
         .toString();
   }
 }
@@ -150,6 +170,11 @@ class WeatherTodayModelBuilder
   set weatherCode(ListBuilder<int>? weatherCode) =>
       _$this._weatherCode = weatherCode;
 
+  ListBuilder<String>? _address;
+  ListBuilder<String> get address =>
+      _$this._address ??= new ListBuilder<String>();
+  set address(ListBuilder<String>? address) => _$this._address = address;
+
   WeatherTodayModelBuilder();
 
   WeatherTodayModelBuilder get _$this {
@@ -158,6 +183,7 @@ class WeatherTodayModelBuilder
       _time = $v.time.toBuilder();
       _temp = $v.temp.toBuilder();
       _weatherCode = $v.weatherCode.toBuilder();
+      _address = $v.address.toBuilder();
       _$v = null;
     }
     return this;
@@ -184,7 +210,8 @@ class WeatherTodayModelBuilder
           new _$WeatherTodayModel._(
               time: time.build(),
               temp: temp.build(),
-              weatherCode: weatherCode.build());
+              weatherCode: weatherCode.build(),
+              address: address.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -194,6 +221,8 @@ class WeatherTodayModelBuilder
         temp.build();
         _$failedField = 'weatherCode';
         weatherCode.build();
+        _$failedField = 'address';
+        address.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'WeatherTodayModel', _$failedField, e.toString());

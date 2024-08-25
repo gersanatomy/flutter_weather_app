@@ -13,6 +13,7 @@ abstract class WeatherTodayModel
   BuiltList<double> get temp;
   @BuiltValueField(wireName: "weather_code")
   BuiltList<int> get weatherCode;
+  BuiltList<String> get address;
 
   WeatherTodayModel._();
 

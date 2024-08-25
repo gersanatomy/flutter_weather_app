@@ -11,10 +11,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_weather_app/bloc/weather/weather_bloc.dart';
 import 'package:flutter_weather_app/features/splash/splash_screen.dart';
 import 'package:flutter_weather_app/features/weather/weather_screen.dart';
+import 'package:flutter_weather_app/services/weather_service.dart';
+import 'package:mocktail/mocktail.dart';
 
 import 'mock/mock_hydrated_bloc.dart';
 import 'mock/mock_weather_models.dart';
-import 'unit_testing/weather_bloc_unit_test.mocks.dart';
+
+class MockWeatherService extends Mock implements WeatherService {}
 
 Widget makeTestableWidget(Widget child) {
   return MaterialApp(
@@ -45,6 +48,22 @@ void main() {
       expect(find.byKey(const Key('splash')), findsOneWidget);
       expect(find.text('Weather'), findsOneWidget);
       expect(find.text('Forecast'), findsOneWidget);
+    });
+
+    testWidgets('Find weather screen elements successfully',
+        (WidgetTester tester) async {
+      WeatherScreen weatherPage = WeatherScreen(
+        today: today,
+        weekly: weekly,
+      );
+
+      await tester.pumpWidget(makeTestableWidget(weatherPage));
+
+      expect(find.byKey(const Key('weathertoday')), findsOneWidget);
+      expect(
+        find.byKey(const Key('weatherthisweek')),
+        findsOneWidget,
+      );
     });
   });
 }

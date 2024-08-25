@@ -4,6 +4,7 @@ import 'package:flutter_weather_app/bloc/weather/weather_bloc.dart';
 import 'package:flutter_weather_app/features/splash/splash_screen.dart';
 import 'package:flutter_weather_app/features/weather/weather_screen.dart';
 import 'package:flutter_weather_app/services/weather_service.dart';
+import 'package:flutter_weather_app/utils/app_geolocator.dart';
 
 class WeatherAppRoute extends StatefulWidget {
   const WeatherAppRoute({super.key});
@@ -30,7 +31,6 @@ class _WeatherAppRouteState extends State<WeatherAppRoute> {
           return WeatherScreen(
             today: state.weatherToday,
             weekly: state.weatherWeekly,
-            bloc: _bloc,
           );
         }
 
