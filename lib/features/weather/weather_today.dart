@@ -13,12 +13,11 @@ class WeatherToday extends StatefulWidget {
 }
 
 class _WeatherTodayState extends State<WeatherToday> {
-  bool showPerHour = true;
+  bool showPerHour = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: showPerHour ? 320 : 170,
       color: const Color(0xfff2f8f9),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Column(
@@ -58,9 +57,8 @@ class _WeatherTodayState extends State<WeatherToday> {
               ),
             ],
           ),
-          Visibility(
-            visible: showPerHour,
-            child: Container(
+          if (showPerHour)
+            Container(
               margin: const EdgeInsets.only(top: 30),
               height: 130,
               child: ListView.builder(
@@ -71,24 +69,25 @@ class _WeatherTodayState extends State<WeatherToday> {
                 },
               ),
             ),
-          ),
           GestureDetector(
             onTap: () {
               showPerHour = !showPerHour;
               setState(() {});
             },
             child: Center(
-                child: Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: Text(
-                showPerHour ? 'Hide Details' : "Show More Details",
-                style: TextStyle(
+              child: Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Text(
+                  showPerHour ? 'Hide Details' : "Show More Details",
+                  style: TextStyle(
                     color: showPerHour
                         ? Colors.grey[400]
                         : const Color(0xff7f94b7),
-                    fontWeight: FontWeight.w600),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-            )),
+            ),
           )
         ],
       ),
