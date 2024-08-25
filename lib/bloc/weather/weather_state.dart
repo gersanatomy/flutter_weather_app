@@ -4,12 +4,12 @@ abstract class WeatherState extends Equatable {}
 
 class InitialWeatherState extends WeatherState {
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class LoadingState extends WeatherState {
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class WeatherDataFetched extends WeatherState {
@@ -24,5 +24,5 @@ class WeatherDataFetched extends WeatherState {
 
 class WeatherDataEmpty extends WeatherState {
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }

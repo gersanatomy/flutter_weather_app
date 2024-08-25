@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_weather_app/models/weather_model.dart';
 import 'package:flutter_weather_app/models/weather_today_model.dart';
 import 'package:flutter_weather_app/services/weather_service.dart';
-import 'package:flutter_weather_app/utils/app_geolocator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'weather_event.dart';
@@ -88,7 +87,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
   }
 
   Future<WeatherTodayModel> setWeatherToday(weatherToday) async {
-    weatherToday['hourly']['address'] = await AppGeoLocator.getCityProvince();
     final today = WeatherTodayModel.fromJson(weatherToday['hourly']);
     HydratedBloc.storage.write('today', today.toJson());
 

@@ -19,6 +19,8 @@ class WeatherService {
 
     var res = await WeatherApi().getWeatherForecast(query);
 
+    res['hourly']['address'] = await AppGeoLocator.getCityProvince();
+
     return res;
   }
 

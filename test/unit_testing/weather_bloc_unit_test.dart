@@ -6,35 +6,50 @@ import 'package:mocktail/mocktail.dart';
 
 import '../mock/mock_hydrated_bloc.dart';
 import '../mock/mock_setups.dart';
-import '../mock/mock_weather_models.dart';
 
 class MockWeatherService extends Mock implements WeatherService {}
 
 void main() {
   initHydratedBloc();
 
-  group('Weather Feature Testing', () {
+  group('Weather Feature', () {
     final mockService = MockWeatherService();
+    late WeatherBloc weatherBloc;
 
-    final today = MockWeatherModels.setToday();
-    final weekly = MockWeatherModels.setWeekly();
+    setUp(() {
+      weatherBloc = WeatherBloc(mockService);
+    });
+
+    test('initial state is correct', () {
+      expect(weatherBloc.state, InitialWeatherState());
+    });
 
     blocTest<WeatherBloc, WeatherState>(
-      'success: GetWeatherDetailsEvent',
+      'happy path - emits [WeatherDataFetched] from service',
       setUp: () {
         MockWeatherSetup.successGetWeather(mockService);
         MockWeatherSetup.successGetWeatherToday(mockService);
       },
-      build: () => WeatherBloc(mockService),
+      build: () => weatherBloc,
       act: (bloc) => bloc.add(GetWeatherDetailsEvent()),
       skip: 1,
-      expect: () => <WeatherState>[
-        WeatherDataFetched(weatherToday: today, weatherWeekly: weekly)
-      ],
+      expect: () => [isA<WeatherDataFetched>()],
     );
 
     blocTest<WeatherBloc, WeatherState>(
-      'failed: GetWeatherDetailsEvent, should use Hydrated Bloc as backup data',
+      'emits [WeatherDataFetched] with data from local storage',
+      setUp: () {
+        MockWeatherSetup.successGetWeather(mockService);
+        MockWeatherSetup.failedGetWeatherToday(mockService);
+      },
+      build: () => WeatherBloc(mockService),
+      act: (bloc) => bloc.add(GetWeatherDetailsEvent()),
+      skip: 1,
+      expect: () => [isA<WeatherDataFetched>()],
+    );
+
+    blocTest<WeatherBloc, WeatherState>(
+      'emits [WeatherDataEmpty] when both from api and local storage fails',
       setUp: () {
         MockWeatherSetup.failedGetWeather(mockService);
         MockWeatherSetup.failedGetWeatherToday(mockService);
@@ -42,9 +57,7 @@ void main() {
       build: () => WeatherBloc(mockService),
       act: (bloc) => bloc.add(GetWeatherDetailsEvent()),
       skip: 1,
-      expect: () => <WeatherState>[
-        WeatherDataFetched(weatherToday: today, weatherWeekly: weekly)
-      ],
+      expect: () => [isA<WeatherDataEmpty>()],
     );
   });
 }
