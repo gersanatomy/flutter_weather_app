@@ -1,7 +1,13 @@
 part of 'weather_bloc.dart';
 
-abstract class WeatherEvent {}
+abstract class WeatherEvent extends Equatable {}
 
-class GetWeatherDetailsEvent extends WeatherEvent {}
+class GetWeatherDetailsEvent extends WeatherEvent {
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
 
-class WeatherDetailsEmpty extends WeatherEvent {}
+class WeatherDetailsEmpty extends WeatherEvent {
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}

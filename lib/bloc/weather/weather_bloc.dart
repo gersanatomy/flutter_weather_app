@@ -88,7 +88,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> with HydratedMixin {
   }
 
   Future<WeatherTodayModel> setWeatherToday(weatherToday) async {
-    weatherToday['address'] = await AppGeoLocator.getCityProvince();
+    weatherToday['hourly']['address'] = await AppGeoLocator.getCityProvince();
     final today = WeatherTodayModel.fromJson(weatherToday['hourly']);
     HydratedBloc.storage.write('today', today.toJson());
 
