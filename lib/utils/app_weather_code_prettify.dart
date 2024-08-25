@@ -44,9 +44,9 @@ class WeatherCodePrettify {
         return isDayTime ? 'assets/cloudy_1.png' : 'assets/cloudy_2.png';
       case 45 || 48 || 51 || 53 || 55 || 56 || 57:
         return isDayTime ? 'assets/fog_1.png' : 'assets/fog_2.png';
-      case 61 || 63 || 65 || 66 || 67:
+      case 61 || 63 || 65 || 66 || 67 || 80 || 81 || 82:
         return isDayTime ? 'assets/rain_1.png' : 'assets/rain_2.png';
-      case 71 || 73 || 75 || 77 || 80 || 81 || 82 || 85 || 86:
+      case 71 || 73 || 75 || 77 || 85 || 86:
         return isDayTime ? 'assets/snow_1.png' : 'assets/snow_2.png';
       case 95 || 96 || 99:
         return isDayTime ? 'assets/storm_1.png' : 'assets/storm_2.png';
