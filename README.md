@@ -14,3 +14,10 @@ A new Flutter project.
 **Generate code**
 
 Run the following commands to generate code.
+```sh
+# Run this command if appropriate
+flutter pub get
+
+# Run this command whenever you use build_runner
+flutter pub run build_runner build --delete-conflicting-outputs
+```
