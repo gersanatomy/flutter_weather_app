@@ -1,6 +1,13 @@
 # flutter_weather_app
 
-A new Flutter project.
+- [dio](https://pub.dev/packages/dio) to call rest api
+- [flutter_bloc](https://pub.dev/packages/flutter_bloc) for state management
+- [built_value](https://pub.dev/packages/built_value) for data models
+- [hydrated_bloc](https://pub.dev/packages/hydrated_bloc) to store last record
+- [geolocator](https://pub.dev/packages/geolocator) to get user's current location
+- [flutter_test](https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html) for widget test
+- [bloc_test](https://pub.dev/packages/bloc_test) for unit testing
+- [mocktail](https://pub.dev/packages/mocktail) for mocks used in testing 
 
 ## Getting Started
 
